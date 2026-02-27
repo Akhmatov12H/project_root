@@ -8,7 +8,7 @@ DB_CONFIG = {
     'dbname': 'edu_platform',
     'user': 'user',
     'password': 'password',
-    'host': '172.17.0.2',
+    'host': '172.40.0.2',
     'port': 5432
 }
 
