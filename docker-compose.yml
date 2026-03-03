@@ -14,7 +14,7 @@ services:
       network:
         ipv4_address: 172.40.0.2
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user"]
+      test: ["CMD-SHELL", "pg_isready -U user -d edu_platform"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,12 +26,26 @@ services:
     container_name: python_app
     ports:
      - "8000:8000"
+    volumes:
+      - ./app:/app/app
     networks:
       network:
         ipv4_address: 172.40.0.3
     depends_on:
       db:
         condition: service_healthy
+
+  web:
+    image: nginx:latest
+    container_name: web
+    ports:
+     - "80:80"
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d:ro
+    networks:
+      network:
+        ipv4_address: 172.40.0.4
+      
 
 networks:
   network:
