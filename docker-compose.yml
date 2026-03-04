@@ -36,16 +36,17 @@ services:
         condition: service_healthy
 
   web:
-    image: nginx:latest
+    image: nginx:latest_modificated
     container_name: web
     ports:
      - "80:80"
+     - "443:443"
     volumes:
-      - ./docker/nginx:/etc/nginx/conf.d:ro
+      - ./docker/nginx:/etc/nginx/conf.d:rw
     networks:
       network:
         ipv4_address: 172.40.0.4
-      
+    command: /bin/bash -c "mkcert localhost && service nginx restart && tail -f /dev/null"
 
 networks:
   network:
